@@ -1,0 +1,13 @@
+CXXFLAGS=-std=c++11 -O3 -fopenmp -Wall
+LDFLAGS=-O3 -fopenmp
+
+all: hpfa.exe
+
+clean:
+	$(RM) *.o
+
+hpfa.exe: main.o BottomUpRecursiveOpenMpAlgorithm.o BottomUpRecursiveSequentialAlgorithm.o BottomUpRecursiveTasksAlgorithm.o FlowAccumulationLoader.o FlowAccumulationMatrix.o FlowDirectionLoader.o FlowDirectionMatrix.o FlowDirectionReverser.o IFlowAccumulationAlgorithm.o InletNumberCalculator.o InletNumberMatrix.o TopDownOpenMpAlgorithm.o TopDownSequentialAlgorithm.o TopDownTasksAlgorithm.o gettimeofday.o timeval_diff.o TopDownOpenMpMeffaHpAlgorithm.o
+	$(CXX) $(LDFLAGS) -o $@ $^ /c/OSGeo4W/lib/gdal_i.lib
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -I/c/OSGeo4W/include -DUSE_GDAL_C_API

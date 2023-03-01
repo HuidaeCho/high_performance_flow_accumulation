@@ -1,0 +1,16 @@
+MXE_PREFIX=x86_64-w64-mingw32.shared-
+CXX=$(MXE_PREFIX)g++
+GDAL_CONFIG=$(MXE_PREFIX)gdal-config
+CXXFLAGS=-std=c++11 -O3 -fopenmp -Wall
+LDFLAGS=-O3 -fopenmp
+
+all: hpfa.exe
+
+clean:
+	$(RM) *.o
+
+hpfa.exe: main.o BottomUpRecursiveOpenMpAlgorithm.o BottomUpRecursiveSequentialAlgorithm.o BottomUpRecursiveTasksAlgorithm.o FlowAccumulationLoader.o FlowAccumulationMatrix.o FlowDirectionLoader.o FlowDirectionMatrix.o FlowDirectionReverser.o IFlowAccumulationAlgorithm.o InletNumberCalculator.o InletNumberMatrix.o TopDownOpenMpAlgorithm.o TopDownSequentialAlgorithm.o TopDownTasksAlgorithm.o gettimeofday.o timeval_diff.o TopDownOpenMpMeffaHpAlgorithm.o
+	$(CXX) $(LDFLAGS) -o $@ $^ `$(GDAL_CONFIG) --libs`
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $<

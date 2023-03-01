@@ -3,8 +3,7 @@
 
 
 #include "FlowDirectionMatrix.h"
-#include <gdal_priv.h>
-#include <cpl_conv.h>
+#include "GdalMatrixLoader.h"
 #include <fstream>
 
 
@@ -15,8 +14,8 @@ class FlowDirectionLoader
     static const int binaryValueSize;
 
   public:
-    static FlowDirectionMatrix loadGdal(std::string filename, int bandIndex = 1);
-    static void saveGdal(std::string filename, const FlowDirectionMatrix& directionMatrix, int bandIndex = 1);
+    static FlowDirectionMatrix loadGdal(std::string filename, RasterInfo& rasterInfo, int bandIndex = 1);
+    static void saveGdal(std::string filename, const FlowDirectionMatrix& directionMatrix, RasterInfo& rasterInfo, int bandIndex = 1);
 
     static FlowDirectionMatrix loadBinary(std::string filename);
     static void saveBinary(std::string filename, const FlowDirectionMatrix& directionMatrix);
